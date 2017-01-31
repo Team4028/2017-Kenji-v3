@@ -15,7 +15,10 @@ import org.usfirst.frc.team4028.robot.subsystems.DriversStation;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Utility;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,7 +29,6 @@ import edu.wpi.first.wpilibj.Utility;
  */
 public class Robot extends IterativeRobot 
 {
-
 	// ===========================================================
 	//   Define class level instance variables for Robot Runtime controllable objects  
 	// ===========================================================
@@ -61,7 +63,6 @@ public class Robot extends IterativeRobot
     	//====================================================   	
     	_driversStation = new  DriversStation(RobotMap.DRIVER_GAMEPAD_USB_PORT, RobotMap.OPERATOR_GAMEPAD_USB_PORT);
     	_dashboardInputs = new DashboardInputs();
-    	DCMotor.liveTalonNumbers();
     }
     
     /*

@@ -1,5 +1,8 @@
 package org.usfirst.frc.team4028.robot.constants;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+
 public class RobotMap 
 {
 	// ======================================

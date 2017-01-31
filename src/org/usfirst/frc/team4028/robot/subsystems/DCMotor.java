@@ -2,13 +2,13 @@ package org.usfirst.frc.team4028.robot.subsystems;
 
 import org.usfirst.frc.team4028.robot.Utilities;
 import org.usfirst.frc.team4028.robot.constants.MotorConfigEnums.MOTOR_MODE;
-import org.usfirst.frc.team4028.robot.constants.RobotMap;
 
 import com.ctre.*;
 import com.ctre.CANTalon.FeedbackDevice;
 import com.ctre.CANTalon.FeedbackDeviceStatus;
 import com.ctre.CANTalon.TalonControlMode;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 // This class defines the behavior of a standalone DC Motor
@@ -103,7 +103,7 @@ public class DCMotor
 	}
 	
 	//============================================================================================
-	// Methods follow (methods make the robot do something (ie: push changes to the robot hardware))
+	// Methods follow (methods make the robot do something (ie: push changes to the robot hardware)
 	//============================================================================================
 	
 	// This is the main drive method
@@ -157,8 +157,6 @@ public class DCMotor
 		
 		switch (_motorMode)
 		{
-			case DISABLED:
-				break;
 			case ENABLED_ANALOG_MODE:
 			case ENABLED_DIGITAL_MODE:
 				outData = String.format( "%.2f", getCurrentActualSpeedPercent());
@@ -173,18 +171,10 @@ public class DCMotor
 				outData = String.format( "%.0f RPM (%.2f%%)", getCurrentActualRPM(), getRPMErrorPercent());
 				break;
 		}
+		
 		SmartDashboard.putString(_motorName + "_Actual", outData);
+
 	}
-	
-	public static void liveTalonNumbers()
-		{
-		SmartDashboard.putNumber("Motor 1 ID", RobotMap.DC_MOTOR_1_CAN_ADDR);
-		SmartDashboard.putNumber("Motor 2 ID", RobotMap.DC_MOTOR_2_CAN_ADDR);
-		SmartDashboard.putNumber("Motor 3 ID", RobotMap.DC_MOTOR_3_CAN_ADDR);
-		SmartDashboard.putNumber("Motor 4 ID", RobotMap.DC_MOTOR_4_CAN_ADDR);
-		SmartDashboard.putNumber("Motor 5 ID", RobotMap.DC_MOTOR_5_CAN_ADDR);
-		SmartDashboard.putNumber("Motor 6 ID", RobotMap.DC_MOTOR_6_CAN_ADDR);
-		}
 	
 	//============================================================================================
 	// Property Accessors follow (properties only change internal state) (ie: DO NOT push changes to the robot hardware)
