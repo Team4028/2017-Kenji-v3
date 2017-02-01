@@ -85,7 +85,7 @@ public class LogData
 		sb.append("Mtr4ActualVBus" + "\t");
 		sb.append("Mtr4CmdRPM" + "\t");
 		sb.append("Mtr4ActualRPM" + "\t");
-		sb.append("Mtr5RPMDelta%" + "\t");
+		sb.append("Mtr4RPMDelta%" + "\t");
 		
 		sb.append("Mtr5CmdVBus" + "\t");
 		sb.append("Mtr5ActualVBus" + "\t");
@@ -115,7 +115,12 @@ public class LogData
 		sb.append(Motor1ActualVBus + "\t");
 		sb.append(Motor1CmdRPM + "\t");
 		sb.append(Motor1ActualRPM + "\t");
+<<<<<<< HEAD
 		sb.append(String.format( "%.2f", Motor1RPMDeltaPercent) + "\t");
+=======
+		sb.append(Motor1ActualRPM - Motor1CmdRPM + "\t");
+		sb.append(String.format( "%.0f RPM (%.2f%%)", Motor1RPMDeltaPercent) + "\t");
+>>>>>>> origin/master
 		
 		sb.append(Motor2CmdVBus + "\t");
 		sb.append(Motor2ActualVBus + "\t");

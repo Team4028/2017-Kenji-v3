@@ -57,6 +57,7 @@ public class Utilities
     /**
     / This method optionally sets up logging
 	**/
+	@SuppressWarnings("null")
 	public static DataLogger setupLogging(String mode, LogData robotLiveData) 
 	{
 		DataLogger dataLogger;
