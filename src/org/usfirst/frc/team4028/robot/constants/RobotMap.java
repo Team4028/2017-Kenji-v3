@@ -19,12 +19,12 @@ public class RobotMap
 	//public static final int PDB_CAN_ADDR = 3; 
 	
 	// define constants for Talon SRX CAN Bus Addresses
-	public static final int DC_MOTOR_1_CAN_ADDR = 53;
-	public static final int DC_MOTOR_2_CAN_ADDR = 62;
-	public static final int DC_MOTOR_3_CAN_ADDR = 50;
-	public static final int DC_MOTOR_4_CAN_ADDR = 55;
-	public static final int DC_MOTOR_5_CAN_ADDR = 61;
-	public static final int DC_MOTOR_6_CAN_ADDR = 60;
+	public static final int DC_MOTOR_1_CAN_ADDR = 1;
+	public static final int DC_MOTOR_2_CAN_ADDR = 2;
+	public static final int DC_MOTOR_3_CAN_ADDR = 3;
+	public static final int DC_MOTOR_4_CAN_ADDR = 3;
+	public static final int DC_MOTOR_5_CAN_ADDR = 4;
+	public static final int DC_MOTOR_6_CAN_ADDR = 5;
 	
 	// Velocity Closed-Loop Walkthrough - Java  Section 12.4, Rev 1.21 Talon Software Reference Manual
 	//	I used the documented procedure to calc an initial F Gain value, they refined via experimentation 
