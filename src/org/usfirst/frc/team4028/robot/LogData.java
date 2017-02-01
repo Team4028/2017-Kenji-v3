@@ -96,8 +96,8 @@ public class LogData
 		sb.append("Mtr6CmdVBus" + "\t");
 		sb.append("Mtr6ActualVBus" + "\t");
 		sb.append("Mtr6CmdRPM" + "\t");
-		sb.append("Mtr6ActualRPM" + "\r\n");
-		sb.append("Mtr6RPMDelta%" + "\t");
+		sb.append("Mtr6ActualRPM" + "\t");
+		sb.append("Mtr6RPMDelta%" + "\r\n");
 			
 		return sb.toString();
 	}
@@ -115,37 +115,37 @@ public class LogData
 		sb.append(Motor1ActualVBus + "\t");
 		sb.append(Motor1CmdRPM + "\t");
 		sb.append(Motor1ActualRPM + "\t");
-		sb.append(String.format( "%.0f RPM (%.2f%%)", Motor1RPMDeltaPercent) + "\t");
+		sb.append(String.format( "%.2f", Motor1RPMDeltaPercent) + "\t");
 		
 		sb.append(Motor2CmdVBus + "\t");
 		sb.append(Motor2ActualVBus + "\t");
 		sb.append(Motor2CmdRPM + "\t");
 		sb.append(Motor2ActualRPM + "\t");
-		sb.append(String.format( "%.0f RPM (%.2f%%)", Motor2RPMDeltaPercent) + "\t");
+		sb.append(String.format( "%.2f", Motor2RPMDeltaPercent) + "\t");
 		
 		sb.append(Motor3CmdVBus + "\t");
 		sb.append(Motor3ActualVBus + "\t");
 		sb.append(Motor3CmdRPM + "\t");
 		sb.append(Motor3ActualRPM + "\t");
-		sb.append(String.format( "%.0f RPM (%.2f%%)", Motor3RPMDeltaPercent) + "\t");
+		sb.append(String.format( "%.2f", Motor3RPMDeltaPercent) + "\t");
 		
 		sb.append(Motor4CmdVBus + "\t");
 		sb.append(Motor4ActualVBus + "\t");
 		sb.append(Motor4CmdRPM + "\t");
 		sb.append(Motor4ActualRPM + "\t");
-		sb.append(String.format( "%.0f RPM (%.2f%%)", Motor4RPMDeltaPercent) + "\t");
+		sb.append(String.format( "%.2f", Motor4RPMDeltaPercent) + "\t");
 		
 		sb.append(Motor5CmdVBus + "\t");
 		sb.append(Motor5ActualVBus + "\t");
 		sb.append(Motor5CmdRPM + "\t");
 		sb.append(Motor5ActualRPM + "\t");
-		sb.append(String.format( "%.0f RPM (%.2f%%)", Motor5RPMDeltaPercent) + "\t");
+		sb.append(String.format( "%.2f", Motor5RPMDeltaPercent) + "\t");
 		
 		sb.append(Motor6CmdVBus + "\t");
 		sb.append(Motor6ActualVBus + "\t");
 		sb.append(Motor6CmdRPM + "\t");
-		sb.append(Motor6ActualRPM + "\r");
-		sb.append(String.format( "%.0f RPM (%.2f%%)", Motor6RPMDeltaPercent) + "\t\n");
+		sb.append(Motor6ActualRPM + "\t");
+		sb.append(String.format( "%.2f", Motor6RPMDeltaPercent) + "\r\n");
 		
 		return sb.toString();
 	}
