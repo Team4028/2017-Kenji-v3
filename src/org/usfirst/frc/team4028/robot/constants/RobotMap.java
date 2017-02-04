@@ -43,6 +43,12 @@ public class RobotMap
 	public static final double DC_MOTOR_X_PID_I_GAIN = 0.0; 
 	public static final double DC_MOTOR_X_PID_D_GAIN  = 0.0;
 	
+	// Constants involved in LINEAR ACTUATOR
+	public static final int ACTUATOR_PWM_PORT = 9;
+	public static final double MAX_THRESHOLD = 0.8;
+	public static final double MIN_THRESHOLD = 0.3;
+	public static final double CHANGE_INTERVAL = 0.1;
+	
 	// ======================================
 	// define constants for PWM Ports on RobioRio
 	// ======================================

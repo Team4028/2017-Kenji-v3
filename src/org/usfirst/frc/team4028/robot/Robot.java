@@ -12,6 +12,8 @@ import org.usfirst.frc.team4028.robot.subsystems.DCMotor;
 import org.usfirst.frc.team4028.robot.subsystems.DashboardInputs;
 import org.usfirst.frc.team4028.robot.subsystems.DashboardInputs.TestMotorConfig;
 import org.usfirst.frc.team4028.robot.subsystems.DriversStation;
+import org.usfirst.frc.team4028.robot.subsystems.DriversStation.DriversStationInputs;
+import org.usfirst.frc.team4028.robot.subsystems.LinearActuator;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -40,6 +42,8 @@ public class Robot extends IterativeRobot
 	private DCMotor _dcMotor5;
 	private DCMotor _dcMotor6;
 	
+	private LinearActuator _linearActuator;
+	
 	// Wrapper around data logging (if it is enabled)
 	private DataLogger _dataLogger;
 	// DTO (Data Transfer Object) holding all live Robot Data Values
@@ -61,6 +65,7 @@ public class Robot extends IterativeRobot
     	//====================================================   	
     	_driversStation = new  DriversStation(RobotMap.DRIVER_GAMEPAD_USB_PORT, RobotMap.OPERATOR_GAMEPAD_USB_PORT);
     	_dashboardInputs = new DashboardInputs();
+    	_linearActuator = new LinearActuator(RobotMap.ACTUATOR_PWM_PORT);
     	DCMotor.liveTalonNumbers();
     }
     
@@ -294,8 +299,14 @@ public class Robot extends IterativeRobot
         	System.out.println("....Motor 6 disabled!");
         }
         
+      	// =====================================
+    	// Step 3: Set an Initial Value for Linear Actuator
     	// =====================================
-    	// Step 3: Optionally Configure Logging
+ 
+        _linearActuator.InitialConfig();
+        
+    	// =====================================
+    	// Step 4: Optionally Configure Logging
     	// =====================================
         _liveLogData = new LogData();
     	_dataLogger = Utilities.setupLogging("teleop", _liveLogData);
@@ -455,12 +466,140 @@ public class Robot extends IterativeRobot
     	}
     	
     	// =====================================
-    	// Step 3: Refresh Dashboard
+    	// Step 3: Handle Linear Actuator
+    	// =====================================
+    	
+        switch(_dashboardInputs.getActuatorConfiguration().ActuatorUpButton)
+        {
+        case DRIVER_BLUE_BUTTON_X:
+        {
+        	if (_driversStation.getIsDriverBlueBtnXJustPressed())
+        	{
+        		_linearActuator.UpOne();
+        	}
+        }
+        case DRIVER_GREEN_BUTTON_A:
+        {
+        	if (_driversStation.getIsDriverGreenBtnAJustPressed())
+        	{
+        		_linearActuator.UpOne();
+        	}
+        }
+        
+        case DRIVER_RED_BUTTON_B:
+        {
+        	if (_driversStation.getIsDriverRedBtnBJustPressed())
+        	{
+        		_linearActuator.UpOne();
+        	}
+        }
+        case DRIVER_YELLOW_BUTTON_Y:
+        {
+        	if (_driversStation.getIsDriverYellowBtnYJustPressed())
+        	{
+        		_linearActuator.UpOne();
+        	}
+        }
+
+        case OPERATOR_BLUE_BUTTON_X:
+        {
+        	if (_driversStation.getIsOperatorBlueBtnXJustPressed())
+        	{
+        		_linearActuator.UpOne();
+        	}      	
+        }
+        case OPERATOR_GREEN_BUTTON_A:
+        {
+        	if (_driversStation.getIsDriverGreenBtnAJustPressed())
+        	{
+        		_linearActuator.UpOne();
+        	}
+        }
+        
+        case OPERATOR_RED_BUTTON_B:
+        {
+        	if (_driversStation.getIsDriverRedBtnBJustPressed())
+        	{
+        		_linearActuator.UpOne();
+        	}
+        }
+        case OPERATOR_YELLOW_BUTTON_Y:
+        {
+        	if (_driversStation.getIsOperatorYellowBtnYJustPressed())
+        	{
+        		_linearActuator.UpOne();
+        	}
+        }
+
+        switch(_dashboardInputs.getActuatorConfiguration().ActuatorDownButton)
+        {
+        case DRIVER_BLUE_BUTTON_X:
+        {
+        	if (_driversStation.getIsDriverBlueBtnXJustPressed())
+        	{
+        		_linearActuator.DownOne();
+        	}
+        }
+        case DRIVER_GREEN_BUTTON_A:
+        {
+        	if (_driversStation.getIsDriverGreenBtnAJustPressed())
+        	{
+        		_linearActuator.DownOne();
+        	}
+        }
+        
+        case DRIVER_RED_BUTTON_B:
+        {
+        	if (_driversStation.getIsDriverRedBtnBJustPressed())
+        	{
+        		_linearActuator.DownOne();
+        	}
+        }
+        case DRIVER_YELLOW_BUTTON_Y:
+        {
+        	if (_driversStation.getIsDriverYellowBtnYJustPressed())
+        	{
+        		_linearActuator.DownOne();
+        	}
+        }
+        case OPERATOR_BLUE_BUTTON_X:
+        {
+        	if (_driversStation.getIsOperatorBlueBtnXJustPressed())
+        	{
+        		_linearActuator.DownOne();
+        	}
+        }
+        case OPERATOR_GREEN_BUTTON_A:
+        {
+        	if (_driversStation.getIsDriverGreenBtnAJustPressed())
+        	{
+        		_linearActuator.DownOne();
+        	}
+        }
+        
+        case OPERATOR_RED_BUTTON_B:
+        {
+        	if (_driversStation.getIsDriverRedBtnBJustPressed())
+        	{
+        		_linearActuator.DownOne();
+        	}
+        }
+        case OPERATOR_YELLOW_BUTTON_Y:
+        {
+        	if (_driversStation.getIsOperatorYellowBtnYJustPressed())
+        	{
+        		_linearActuator.DownOne();
+        	}
+        }
+        }
+        	
+    	// =====================================
+    	// Step 4: Refresh Dashboard
     	// =====================================
     	outputAllToSmartDashboard();
     	
     	// =============================
-    	// Step 4: Optional Data Logging
+    	// Step 5: Optional Data Logging
     	// =============================
   	
     	if(_liveLogData.IsLoggingEnabled == true)
@@ -471,7 +610,10 @@ public class Robot extends IterativeRobot
     		// save last scan dt so we can calc delta
         	_liveLogData.LastScanDT = new Date();
     	}
+       }
+   
     }
+    
     
     // this method updates the data in our logging data object
     private void UpdateLiveLogData()
@@ -857,6 +999,8 @@ public class Robot extends IterativeRobot
     		default:
     			break;
     	}
+    	
+    	
     	
     	/*  Truth Table
     	 * 
