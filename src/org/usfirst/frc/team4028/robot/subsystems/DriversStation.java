@@ -422,7 +422,7 @@ public class DriversStation
 		// === driver buttons ====================================
 		public boolean getIsDriverGreenBtnAPressed()
     	{
-    		return _isDriverGreenBtnAPressed;
+			return _isDriverGreenBtnAPressed;
     	}
 		
 		public boolean getIsDriverRedBtnBPressed()

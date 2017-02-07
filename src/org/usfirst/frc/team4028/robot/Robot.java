@@ -12,12 +12,12 @@ import org.usfirst.frc.team4028.robot.subsystems.DCMotor;
 import org.usfirst.frc.team4028.robot.subsystems.DashboardInputs;
 import org.usfirst.frc.team4028.robot.subsystems.DashboardInputs.TestMotorConfig;
 import org.usfirst.frc.team4028.robot.subsystems.DriversStation;
-import org.usfirst.frc.team4028.robot.subsystems.DriversStation.DriversStationInputs;
 import org.usfirst.frc.team4028.robot.subsystems.LinearActuator;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Utility;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -42,7 +42,7 @@ public class Robot extends IterativeRobot
 	private DCMotor _dcMotor5;
 	private DCMotor _dcMotor6;
 	
-	private LinearActuator _linearActuator;
+	public LinearActuator _linearActuator;
 	
 	// Wrapper around data logging (if it is enabled)
 	private DataLogger _dataLogger;
@@ -97,11 +97,14 @@ public class Robot extends IterativeRobot
      *****************************************************************************************************
      */
     public void teleopInit() 
-    {        
+    {   
     	// =====================================
     	// Step 1: Get the DASHBOARD Input values at the start of Telop
     	// =====================================
     	_dashboardInputs.ReadMotorCfgValues();
+    	_dashboardInputs.ReadActuatorConfig();
+       	_dashboardInputs.get_actuatorUpBtn();
+    	_dashboardInputs.get_actuatorDownBtn();
     	
     	// =====================================
     	// Step 2: Optionally Configure Each Motor 
@@ -469,129 +472,118 @@ public class Robot extends IterativeRobot
     	// Step 3: Handle Linear Actuator
     	// =====================================
     	
-        switch(_dashboardInputs.getActuatorConfiguration().ActuatorUpButton)
-        {
-        case DRIVER_BLUE_BUTTON_X:
-        {
-        	if (_driversStation.getIsDriverBlueBtnXJustPressed())
-        	{
-        		_linearActuator.UpOne();
-        	}
-        }
-        case DRIVER_GREEN_BUTTON_A:
-        {
-        	if (_driversStation.getIsDriverGreenBtnAJustPressed())
-        	{
-        		_linearActuator.UpOne();
-        	}
-        }
-        
-        case DRIVER_RED_BUTTON_B:
-        {
-        	if (_driversStation.getIsDriverRedBtnBJustPressed())
-        	{
-        		_linearActuator.UpOne();
-        	}
-        }
-        case DRIVER_YELLOW_BUTTON_Y:
-        {
-        	if (_driversStation.getIsDriverYellowBtnYJustPressed())
-        	{
-        		_linearActuator.UpOne();
-        	}
-        }
-
-        case OPERATOR_BLUE_BUTTON_X:
-        {
-        	if (_driversStation.getIsOperatorBlueBtnXJustPressed())
-        	{
-        		_linearActuator.UpOne();
-        	}      	
-        }
-        case OPERATOR_GREEN_BUTTON_A:
-        {
-        	if (_driversStation.getIsDriverGreenBtnAJustPressed())
-        	{
-        		_linearActuator.UpOne();
-        	}
-        }
-        
-        case OPERATOR_RED_BUTTON_B:
-        {
-        	if (_driversStation.getIsDriverRedBtnBJustPressed())
-        	{
-        		_linearActuator.UpOne();
-        	}
-        }
-        case OPERATOR_YELLOW_BUTTON_Y:
-        {
-        	if (_driversStation.getIsOperatorYellowBtnYJustPressed())
-        	{
-        		_linearActuator.UpOne();
-        	}
-        }
-
-        switch(_dashboardInputs.getActuatorConfiguration().ActuatorDownButton)
-        {
-        case DRIVER_BLUE_BUTTON_X:
-        {
-        	if (_driversStation.getIsDriverBlueBtnXJustPressed())
-        	{
-        		_linearActuator.DownOne();
-        	}
-        }
-        case DRIVER_GREEN_BUTTON_A:
-        {
-        	if (_driversStation.getIsDriverGreenBtnAJustPressed())
-        	{
-        		_linearActuator.DownOne();
-        	}
-        }
-        
-        case DRIVER_RED_BUTTON_B:
-        {
-        	if (_driversStation.getIsDriverRedBtnBJustPressed())
-        	{
-        		_linearActuator.DownOne();
-        	}
-        }
-        case DRIVER_YELLOW_BUTTON_Y:
-        {
-        	if (_driversStation.getIsDriverYellowBtnYJustPressed())
-        	{
-        		_linearActuator.DownOne();
-        	}
-        }
-        case OPERATOR_BLUE_BUTTON_X:
-        {
-        	if (_driversStation.getIsOperatorBlueBtnXJustPressed())
-        	{
-        		_linearActuator.DownOne();
-        	}
-        }
-        case OPERATOR_GREEN_BUTTON_A:
-        {
-        	if (_driversStation.getIsDriverGreenBtnAJustPressed())
-        	{
-        		_linearActuator.DownOne();
-        	}
-        }
-        
-        case OPERATOR_RED_BUTTON_B:
-        {
-        	if (_driversStation.getIsDriverRedBtnBJustPressed())
-        	{
-        		_linearActuator.DownOne();
-        	}
-        }
-        case OPERATOR_YELLOW_BUTTON_Y:
-        {
-        	if (_driversStation.getIsOperatorYellowBtnYJustPressed())
-        	{
-        		_linearActuator.DownOne();
-        	}
-        }
-        }
+      	SmartDashboard.putNumber("Actuator Current Value", _linearActuator._currentPosition);
+      	
+      	
+      	//Up Mode
+      	switch (_dashboardInputs.get_actuatorUpBtn())
+      	{
+      		case DRIVER_BLUE_BUTTON_X:
+      			if(_driversStation.getIsDriverBlueBtnXJustPressed())
+      			{
+      				_linearActuator.UpOne();
+      			}
+      			else {}
+      		case DRIVER_GREEN_BUTTON_A:
+      			if(_driversStation.getIsDriverGreenBtnAJustPressed())
+      			{
+      				_linearActuator.UpOne();
+      			}
+      			else {}
+      		case DRIVER_RED_BUTTON_B:
+      			if(_driversStation.getIsDriverRedBtnBJustPressed())
+      			{
+      				_linearActuator.UpOne();
+      			}
+      			else {}
+      		case DRIVER_YELLOW_BUTTON_Y:
+      			if(_driversStation.getIsDriverYellowBtnYJustPressed())
+      			{
+      				_linearActuator.UpOne();
+      			}
+      			else {}
+      		case DRIVER_BACK_BUTTON:
+      			if(_driversStation.getIsDriverBackBtnJustPressed())
+      			{
+      				_linearActuator.UpOne();
+      			}
+      			else {}
+      		case DRIVER_START_BUTTON:
+      			if(_driversStation.getIsDriverStartBtnJustPressed())
+      			{
+      				_linearActuator.UpOne();
+      			}
+      			else {}
+      		case DRIVER_LEFT_BUMPER:
+      			if(_driversStation.getIsDriverLeftBumperBtnJustPressed())
+      			{
+      				_linearActuator.UpOne();
+      			}
+      			else {}
+      		case DRIVER_RIGHT_BUMPER:
+      			if(_driversStation.getIsDriverRightBumperBtnJustPressed())
+      			{
+      				_linearActuator.UpOne();
+      			}
+      			else {}
+		default: case UNDEFINED:
+			break;
+      	}
+      	
+      	//Down Mode
+      	switch (_dashboardInputs.get_actuatorDownBtn())
+      	{
+      		case DRIVER_BLUE_BUTTON_X:
+      			if(_driversStation.getIsDriverBlueBtnXJustPressed())
+      			{
+      				_linearActuator.DownOne();
+      			}
+      			else {}
+      		case DRIVER_GREEN_BUTTON_A:
+      			if(_driversStation.getIsDriverGreenBtnAJustPressed())
+      			{
+      				_linearActuator.DownOne();
+      			}
+      			else {}
+      		case DRIVER_RED_BUTTON_B:
+      			if(_driversStation.getIsDriverRedBtnBJustPressed())
+      			{
+      				_linearActuator.DownOne();
+      			}
+      			else {}
+      		case DRIVER_YELLOW_BUTTON_Y:
+      			if(_driversStation.getIsDriverYellowBtnYJustPressed())
+      			{
+      				_linearActuator.DownOne();
+      			}
+      			else {}
+      		case DRIVER_BACK_BUTTON:
+      			if(_driversStation.getIsDriverBackBtnJustPressed())
+      			{
+      				_linearActuator.DownOne();
+      			}
+      			else {}
+      		case DRIVER_START_BUTTON:
+      			if(_driversStation.getIsDriverStartBtnJustPressed())
+      			{
+      				_linearActuator.DownOne();
+      			}
+      			else {}
+      		case DRIVER_LEFT_BUMPER:
+      			if(_driversStation.getIsDriverLeftBumperBtnJustPressed())
+      			{
+      				_linearActuator.DownOne();
+      			}
+      			else {}
+      		case DRIVER_RIGHT_BUMPER:
+      			if(_driversStation.getIsDriverRightBumperBtnJustPressed())
+      			{
+      				_linearActuator.DownOne();
+      			}
+      			else {}
+		default: case UNDEFINED:
+			break;
+      }
         	
     	// =====================================
     	// Step 4: Refresh Dashboard
@@ -610,10 +602,7 @@ public class Robot extends IterativeRobot
     		// save last scan dt so we can calc delta
         	_liveLogData.LastScanDT = new Date();
     	}
-       }
-   
     }
-    
     
     // this method updates the data in our logging data object
     private void UpdateLiveLogData()

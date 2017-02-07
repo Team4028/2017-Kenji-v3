@@ -9,6 +9,7 @@ import org.usfirst.frc.team4028.robot.constants.MotorConfigEnums.MOTOR_MAX_SPEED
 import org.usfirst.frc.team4028.robot.constants.MotorConfigEnums.MOTOR_MODE;
 import org.usfirst.frc.team4028.robot.constants.MotorConfigEnums.MOTOR_CONSTANTV_TARGET;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -28,7 +29,8 @@ public class DashboardInputs
 	private TestMotorConfig _motor4Configuration;
 	private TestMotorConfig _motor5Configuration;
 	private TestMotorConfig _motor6Configuration;
-	private TestServoConfig _actuatorConfiguration;
+	public DIGITAL_MODE_BUTTON _actuatorUpChoice;
+	public DIGITAL_MODE_BUTTON _actuatorDownChoice;
 	
 	// ===================================
 	// define Smart Dashboard choosers
@@ -172,11 +174,12 @@ public class DashboardInputs
 	
 	private void TestActuatorSendableChoosers()
 	{
-		_actuatorUpBtnChooser = new SendableChooser();
+		_actuatorUpBtnChooser = new SendableChooser<DIGITAL_MODE_BUTTON>();
+		_actuatorUpBtnChooser.addDefault("Undefined=UP", DIGITAL_MODE_BUTTON.UNDEFINED);
 		_actuatorUpBtnChooser.addObject("DRIVER_GREEN_BUTTON_A", DIGITAL_MODE_BUTTON.DRIVER_GREEN_BUTTON_A);
 		_actuatorUpBtnChooser.addObject("DRIVER_RED_BUTTON_B", DIGITAL_MODE_BUTTON.DRIVER_RED_BUTTON_B);
-		_actuatorUpBtnChooser.addObject("OPERATOR_BLUE_BUTTON_X", DIGITAL_MODE_BUTTON.DRIVER_BLUE_BUTTON_X);
-		_actuatorUpBtnChooser.addObject("OPERATOR_YELLOW_BUTTON_Y", DIGITAL_MODE_BUTTON.DRIVER_YELLOW_BUTTON_Y);
+		_actuatorUpBtnChooser.addObject("DRIVER_BLUE_BUTTON_X", DIGITAL_MODE_BUTTON.DRIVER_BLUE_BUTTON_X);
+		_actuatorUpBtnChooser.addObject("DRIVER_YELLOW_BUTTON_Y", DIGITAL_MODE_BUTTON.DRIVER_YELLOW_BUTTON_Y);
 		_actuatorUpBtnChooser.addObject("OPERATOR_GREEN_BUTTON_A", DIGITAL_MODE_BUTTON.OPERATOR_GREEN_BUTTON_A);
 		_actuatorUpBtnChooser.addObject("OPERATOR_RED_BUTTON_B", DIGITAL_MODE_BUTTON.OPERATOR_RED_BUTTON_B);
 		_actuatorUpBtnChooser.addObject("OPERATOR_BLUE_BUTTON_X", DIGITAL_MODE_BUTTON.OPERATOR_BLUE_BUTTON_X);
@@ -184,11 +187,12 @@ public class DashboardInputs
 		
 		SmartDashboard.putData("Actuator Up Button", _actuatorUpBtnChooser);
 		
-		_actuatorDownBtnChooser = new SendableChooser();
+		_actuatorDownBtnChooser = new SendableChooser<DIGITAL_MODE_BUTTON>();
+		_actuatorDownBtnChooser.addDefault("Undefined=DOWN", DIGITAL_MODE_BUTTON.UNDEFINED);
 		_actuatorDownBtnChooser.addObject("DRIVER_GREEN_BUTTON_A", DIGITAL_MODE_BUTTON.DRIVER_GREEN_BUTTON_A);
 		_actuatorDownBtnChooser.addObject("DRIVER_RED_BUTTON_B", DIGITAL_MODE_BUTTON.DRIVER_RED_BUTTON_B);
-		_actuatorDownBtnChooser.addObject("OPERATOR_BLUE_BUTTON_X", DIGITAL_MODE_BUTTON.DRIVER_BLUE_BUTTON_X);
-		_actuatorDownBtnChooser.addObject("OPERATOR_YELLOW_BUTTON_Y", DIGITAL_MODE_BUTTON.DRIVER_YELLOW_BUTTON_Y);
+		_actuatorDownBtnChooser.addObject("DRIVER_BLUE_BUTTON_X", DIGITAL_MODE_BUTTON.DRIVER_BLUE_BUTTON_X);
+		_actuatorDownBtnChooser.addObject("DRIVER_YELLOW_BUTTON_Y", DIGITAL_MODE_BUTTON.DRIVER_YELLOW_BUTTON_Y);
 		_actuatorDownBtnChooser.addObject("OPERATOR_GREEN_BUTTON_A", DIGITAL_MODE_BUTTON.OPERATOR_GREEN_BUTTON_A);
 		_actuatorDownBtnChooser.addObject("OPERATOR_RED_BUTTON_B", DIGITAL_MODE_BUTTON.OPERATOR_RED_BUTTON_B);
 		_actuatorDownBtnChooser.addObject("OPERATOR_BLUE_BUTTON_X", DIGITAL_MODE_BUTTON.OPERATOR_BLUE_BUTTON_X);
@@ -397,11 +401,23 @@ public class DashboardInputs
 		return _motor6Configuration;
 	}
 	
-	public TestServoConfig getActuatorConfiguration()
+	public void ReadActuatorConfig()
 	{
-		return _actuatorConfiguration;
+		_actuatorUpChoice = (DIGITAL_MODE_BUTTON)_actuatorUpBtnChooser.getSelected();
+		_actuatorDownChoice = (DIGITAL_MODE_BUTTON)_actuatorDownBtnChooser.getSelected();
+		DriverStation.reportWarning("Actuator Up Choice " + _actuatorUpChoice, true);
+		DriverStation.reportWarning("Actuator Down Choice " + _actuatorDownChoice, true);
 	}
-
+	
+	public DIGITAL_MODE_BUTTON get_actuatorUpBtn ()
+	{
+		return _actuatorUpChoice;
+	}
+	
+	public DIGITAL_MODE_BUTTON get_actuatorDownBtn ()
+	{
+		return _actuatorDownChoice;
+	}
 	
 	public void ReadMotorCfgValues()
 	{
@@ -468,15 +484,9 @@ public class DashboardInputs
     	_motor6Configuration.IsCmdLatchModeEnabled = _dcMotor6_DigitalLatchModeChooser.getSelected().get_isEnabled();
     	_motor6Configuration.ConstantVTargetRPM = _dcMotor6_TargetRPMChooser.getSelected().get_targetRPM();
     	
+    	
 	}
 
-	
-	public void ReadActuatorConfigValues ()
-	{
-    	_actuatorConfiguration = new TestServoConfig();
-    	_actuatorConfiguration.ActuatorUpButton = _actuatorUpBtnChooser.getSelected();
-    	_actuatorConfiguration.ActuatorDownButton = _actuatorDownBtnChooser.getSelected();
-	}
 	public class TestMotorSendableChoosers
 	{
 		public SendableChooser<MOTOR_MODE> DcMotorX_Mode_Chooser;
@@ -515,12 +525,12 @@ public class DashboardInputs
 		public DIGITAL_MODE_BUTTON DigitalModeButton;
 		
 		public int ConstantVTargetRPM;
-		
 	}
 
-	public class TestServoConfig
+/*	public class TestServoConfig
 	{
 		public DIGITAL_MODE_BUTTON ActuatorUpButton;
 		public DIGITAL_MODE_BUTTON ActuatorDownButton;
 	}
+	*/
 }

@@ -2,29 +2,33 @@ package org.usfirst.frc.team4028.robot.subsystems;
 
 import org.usfirst.frc.team4028.robot.constants.RobotMap;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Servo;
 
-public class LinearActuator {
-	
-	//====Define Robot Objects
-	Servo _linearActuator;
-	
-	//====Define working and state variables
-		public double _currentPosition = _linearActuator.getPosition();
-	
-public LinearActuator (int pwmPort)
+
+public class LinearActuator 
 {
-	_linearActuator = new Servo(pwmPort);
-}
-	public void InitialConfig() {
-		
-		_linearActuator.set(0.3);
+	Servo _linearActuator;
+	public double _currentPosition;
+	
+	public LinearActuator (int pwmPort)
+	{
+		_linearActuator = new Servo(pwmPort);
+		_currentPosition = _linearActuator.get();
+		DriverStation.reportWarning("Position " + _currentPosition, true);
 	}
 	
-	public void UpOne(){
-		if (_linearActuator.getPosition() < RobotMap.MAX_THRESHOLD)
+	public void InitialConfig() 
+	{	
+		_linearActuator.set(0.4);
+	}
+	
+	public void UpOne()
+	{
+		DriverStation.reportWarning("Up", true);
+		if (_currentPosition < RobotMap.MAX_THRESHOLD)
 		{
-			_linearActuator.setPosition(_currentPosition + RobotMap.CHANGE_INTERVAL);
+			_linearActuator.set(_currentPosition + RobotMap.CHANGE_INTERVAL);
 		}
 		else
 		{
@@ -32,16 +36,16 @@ public LinearActuator (int pwmPort)
 		}
 	}
 	
-	public void DownOne(){
-		if (_linearActuator.getPosition() > RobotMap.MIN_THRESHOLD)
+	public void DownOne()
+	{
+		DriverStation.reportWarning("Down", true);
+		if (_currentPosition > RobotMap.MIN_THRESHOLD)
 		{
-			_linearActuator.setPosition(_currentPosition - RobotMap.CHANGE_INTERVAL);
+			_linearActuator.set(_currentPosition - RobotMap.CHANGE_INTERVAL);
 		}
 		else 
 		{
 			System.out.println("Error: Actuator cannot be decreased, already at minumum value.");
 		}
 	}
-	
-
 }
